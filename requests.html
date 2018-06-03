@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Social Helper</title>
+	<script src="static/js/socket.io-1.4.5.js"></script>
+	<script src="static/js/jquery-3.0.0.js"></script>
+	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+	<link rel="stylesheet" type="text/css" href="static/css/requests.css">
+</head>
+<body>
+<center>
+<div id="main-block">
+	<center>
+		<h1 style="color: #f94f8b;">Запросы на добавление ботов:</h1>
+		<br>
+		<p id="main-data-block"></p>
+	</center>
+</div>
+<div id="main-block">
+	<br>
+	<button class="w3-btn w3-amber" onclick="doDone()">Книга жалоб и предложений</button>
+	<br><br>
+</div>
+</center>
+<div id="bot-choose-block">
+	<center>
+		<br><br><br><br>
+		Никнейм бота: <input type="text" id="bot_candidate">
+		<br><br>
+		<button class="w3-btn w3-amber" onclick="doDone()">Предложить</button>
+	</center>
+</div>
+</body>
+<script>
+	var socket = null;
+
+	function openSendBlock() {
+    	document.getElementById("main-block").style.display = "none";
+        document.getElementById("bot-choose-block").style.display = "block";
+    }
+
+    function doDone() {
+    	alert("Готово!");
+    	window.location.href = "https://google.com/";
+    }
+
+	window.onload = function() {
+		socket = io.connect('http://127.0.0.1:8080');
+    	socket.emit("getData", { name: "none" });
+    	socket.on('getData', function (data) {
+    		for(var i = 0; i < data.alldata.updates.length; i++) {
+    			if(data.alldata.updates[i].bots == "") data.alldata.updates[i].bots = "предложений пока нет"
+    			document.getElementById("main-data-block").innerHTML += "*" + data.alldata.updates[i].text + "*" + "<br> (" + data.alldata.updates[i].bots + ") <br><p><button onclick='openSendBlock()' class='w3-btn w3-amber'>Предложить свою кандидатуру бота</button></p>";
+    		}
+        });
+	}
+</script>
+</html>

@@ -1,0 +1,23 @@
+body {
+	background-color: #eaf7ff;
+}
+
+#main-block {
+	margin-top: 4.5%;
+	border: 14px solid #ea2187;
+	border-radius: 11px;
+	width: 83%;
+}
+
+#main-data-block {
+	font-size: 15px;
+	font-style: italic;
+}
+
+#bot-choose-block {
+	display: none;
+}
+
+#bot_candidate {
+	background-color: #c9f5c8;
+}
